@@ -19,6 +19,7 @@ import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftInventory;
 import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftInventoryEnchanting;
 import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftInventoryView;
 import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_21_R1.inventory.view.CraftEnchantmentView;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.Contract;
@@ -144,7 +145,7 @@ public class EnchantingTableInventoryImpl extends EnchantingTableInventory {
          * The internal bukkit entity for this container enchanting table
          */
         @Nullable
-        private CraftInventoryView bukkitEntity;
+        private CraftEnchantmentView bukkitEntity;
 
         /**
          * Field for accessing the enchant slots field
@@ -179,9 +180,8 @@ public class EnchantingTableInventoryImpl extends EnchantingTableInventory {
             }
         }
 
-        @NotNull
         @Override
-        public CraftInventoryView getBukkitView() {
+        public CraftEnchantmentView getBukkitView() {
             if (bukkitEntity == null) {
                 try {
                     CraftInventory inventory = new CraftInventoryEnchanting((Container) enchantSlotsField.get(this)) {
@@ -193,7 +193,7 @@ public class EnchantingTableInventoryImpl extends EnchantingTableInventory {
                         }
                     };
 
-                    bukkitEntity = new CraftInventoryView(player, inventory, this);
+                    bukkitEntity = new CraftEnchantmentView(player, inventory, this);
                 } catch (IllegalAccessException exception) {
                     exception.printStackTrace();
                 }

@@ -17,6 +17,7 @@ import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftInventory;
 import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftInventoryBeacon;
 import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftInventoryView;
 import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_21_R1.inventory.view.CraftBeaconView;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.Contract;
@@ -130,7 +131,7 @@ public class BeaconInventoryImpl extends BeaconInventory {
          * The internal bukkit entity for this container beacon
          */
         @Nullable
-        private CraftInventoryView bukkitEntity;
+        private CraftBeaconView bukkitEntity;
 
         /**
          * Field for accessing the beacon field
@@ -161,9 +162,8 @@ public class BeaconInventoryImpl extends BeaconInventory {
             }
         }
 
-        @NotNull
         @Override
-        public CraftInventoryView getBukkitView() {
+        public CraftBeaconView getBukkitView() {
             if (bukkitEntity == null) {
                 try {
                     CraftInventory inventory = new CraftInventoryBeacon((Container) beaconField.get(this)) {
@@ -175,7 +175,7 @@ public class BeaconInventoryImpl extends BeaconInventory {
                         }
                     };
 
-                    bukkitEntity = new CraftInventoryView(player, inventory, this);
+                    bukkitEntity = new CraftBeaconView(player, inventory, this);
                 } catch (IllegalAccessException exception) {
                     throw new RuntimeException(exception);
                 }

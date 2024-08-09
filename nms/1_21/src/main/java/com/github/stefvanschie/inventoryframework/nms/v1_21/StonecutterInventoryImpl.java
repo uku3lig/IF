@@ -19,6 +19,7 @@ import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftInventory;
 import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftInventoryStonecutter;
 import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftInventoryView;
 import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_21_R1.inventory.view.CraftStonecutterView;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.Contract;
@@ -143,7 +144,7 @@ public class StonecutterInventoryImpl extends StonecutterInventory {
          * The internal bukkit entity for this container enchanting table
          */
         @Nullable
-        private CraftInventoryView bukkitEntity;
+        private CraftStonecutterView bukkitEntity;
 
         /**
          * Field for accessing the result inventory field
@@ -171,9 +172,8 @@ public class StonecutterInventoryImpl extends StonecutterInventory {
             getResultInventory().setItem(0, CraftItemStack.asNMSCopy(items[1]));
         }
 
-        @NotNull
         @Override
-        public CraftInventoryView getBukkitView() {
+        public CraftStonecutterView getBukkitView() {
             if (bukkitEntity == null) {
                 CraftInventory inventory = new CraftInventoryStonecutter(this.container, getResultInventory()) {
                     @NotNull
@@ -184,7 +184,7 @@ public class StonecutterInventoryImpl extends StonecutterInventory {
                     }
                 };
 
-                bukkitEntity = new CraftInventoryView(player, inventory, this);
+                bukkitEntity = new CraftStonecutterView(player, inventory, this);
             }
 
             return bukkitEntity;
